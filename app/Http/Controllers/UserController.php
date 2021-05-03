@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+use App\Http\Resources\User as UserResource;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -24,7 +26,15 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $user = new User;
+        $user->name = $request->input('name');
+        $user->email = $request->input('email');
+        $user->password = bcrypt($request->input('password'));
+        
+        
+        if($user -> save()) {
+            return new UserResource($user);
+        }
     }
 
     /**

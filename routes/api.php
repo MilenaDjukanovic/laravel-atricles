@@ -33,10 +33,13 @@ Route::get('/article/{id}', 'App\Http\Controllers\ArticleController@show');
 Route::post('/article', 'App\Http\Controllers\ArticleController@store'); 
 
 //Update article
-Route::put('/article', 'App\Http\Controllers\ArticleController@store');
+Route::put('/article2', 'App\Http\Controllers\ArticleController@store');
 
 //Delete article
 Route::delete('/article/{id}', 'App\Http\Controllers\ArticleController@destroy');
+
+//Register user
+Route::post('/register', 'App\Http\Controllers\UserController@store');
 
 //Login user
 Route::post('login', function (Request $request){
