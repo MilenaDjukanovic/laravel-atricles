@@ -26,15 +26,22 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $user = new User;
-        $user->name = $request->input('name');
-        $user->email = $request->input('email');
-        $user->password = bcrypt($request->input('password'));
-        
-        
-        if($user -> save()) {
-            return new UserResource($user);
+        $user = User::where('email', '=', $request->input('email'))->first();
+            if ($user === null) {
+                $user = new User;
+                $user->name = $request->input('name');
+                $user->email = $request->input('email');
+                $user->password = bcrypt($request->input('password'));
+          
+                if($user -> save()) {
+                    return new UserResource($user);
+                }
+        } else {
+            $dataObj = new \stdClass();
+            $dataObj->errorMessage = 'User with that email already exists!';
+            return json_encode($dataObj);
         }
+        
     }
 
     /**
